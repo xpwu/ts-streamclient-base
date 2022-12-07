@@ -110,7 +110,9 @@ export class Client {
     let res = new Promise<[Result, Error | null]>(
       (resolve: (ret: [Result, Error | null ]) => void) => {
         this.allReq.set(reqId, (result)=>{
-          clearTimeout(timer)
+          if (timer) {
+            clearTimeout(timer)
+          }
 
           if (result.err !== null) {
             resolve([emptyResult, result.err]);
@@ -136,7 +138,9 @@ export class Client {
     // 向网络写数据失败，也应该归为连接层的错误
     if (err != null) {
       this.allReq.delete(reqId)
-      clearTimeout(timer)
+      if (timer) {
+        clearTimeout(timer)
+      }
       return [emptyResult, new ConnError(err)];
     }
 
