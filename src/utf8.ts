@@ -2,7 +2,7 @@
 export class Utf8 {
   public readonly raw: Uint8Array;
   private readonly indexes: Array<number>;
-  private str:string;
+  private readonly str:string;
   public readonly byteLength:number;
   public readonly length:number;
 
@@ -151,7 +151,12 @@ export class Utf8 {
     return this.str;
   }
 
+  // Deprecated
   public codePointAt(index: number):ArrayBuffer {
+    return this.codeUnitAt(index);
+  }
+
+  public codeUnitAt(index: number):ArrayBuffer {
     return this.raw.slice(this.indexes[index], this.indexes[index+1]);
   }
 
