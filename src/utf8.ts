@@ -2,7 +2,7 @@
 export class Utf8 {
   public readonly raw: Uint8Array;
   private readonly indexes: Array<number>;
-  private str:string|null;
+  private str:string;
   public readonly byteLength:number;
   public readonly length:number;
 
@@ -11,15 +11,15 @@ export class Utf8 {
 
     if (typeof input !== "string") {
       this.raw = new Uint8Array(input);
+      this.str = ""
       let utf8i = 0;
       while (utf8i < this.raw.length) {
         this.indexes.push(utf8i);
-        utf8i += Utf8.getUTF8CharLength(Utf8.loadUTF8CharCode(this.raw, utf8i));
+        let code = Utf8.loadUTF8CharCode(this.raw, utf8i);
+        this.str += String.fromCodePoint(code)
+        utf8i += Utf8.getUTF8CharLength(code);
       }
       this.indexes.push(utf8i);  // end flag
-
-      this.str = null;
-
     } else {
       this.str = input;
 
@@ -148,19 +148,6 @@ export class Utf8 {
   // }
 
   public toString():string {
-    if (this.str != null) {
-      return this.str
-    }
-
-    let codes = new Array<number>();
-    for (let utf8i = 0; utf8i < this.raw.length;) {
-      let code = Utf8.loadUTF8CharCode(this.raw, utf8i);
-      codes.push(code);
-      utf8i += Utf8.getUTF8CharLength(code);
-    }
-
-    this.str = String.fromCodePoint(...codes);
-
     return this.str;
   }
 
