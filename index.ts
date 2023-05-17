@@ -3,8 +3,12 @@ export {Client, Result} from "./src/client"
 
 export {Utf8} from "./src/utf8"
 
-export {Event, ErrorEvent, WebSocketConstructor, WebSocketInterface, CloseEvent, Connection, MessageEvent} from "./src/connection"
+export type {Event, ErrorEvent, WebSocketConstructor, WebSocketInterface, CloseEvent, MessageEvent} from "./src/connection"
 
-export {Option, RequestTimeout, ConnectTimeout, WebSocket} from "./src/option"
+export {Connection} from "./src/connection"
+
+export type {Option} from "./src/option"
+
+export {RequestTimeout, ConnectTimeout, WebSocket} from "./src/option"
 
 export {ConnError} from "./src/connerror"
