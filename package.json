@@ -1,6 +1,6 @@
 {
   "name": "ts-streamclient-base",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "typescript base lib",
   "author": "xpwu",
   "dependencies": {
