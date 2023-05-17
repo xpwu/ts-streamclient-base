@@ -9,18 +9,18 @@ import {Utf8} from "./utf8"
 
 export class Result {
   public toString():string {
-    return this.utf8.toString()
+    return new Utf8(this.data).toString()
   }
 
   public rawBuffer():Uint8Array {
-    return this.utf8.raw
+    return new Uint8Array(this.data)
   }
 
-  constructor(private utf8:Utf8) {
+  constructor(private data:ArrayBuffer) {
   }
 }
 
-let emptyResult = new Result(new Utf8(""))
+let emptyResult = new Result(new ArrayBuffer(0))
 
 export class Client {
   private readonly net: Net;
@@ -50,7 +50,7 @@ export class Client {
           this.net.WriteForce(res.newPushAck())
           // 异步执行
           setTimeout(()=>{
-            this.onPush(new Result(new Utf8(res.data())))
+            this.onPush(new Result(res.data()))
           }, 0)
 
           return;
@@ -125,7 +125,7 @@ export class Client {
             return
           }
 
-          resolve([new Result(new Utf8(res.data())), null]);
+          resolve([new Result(res.data()), null]);
         });
 
         timer = setTimeout(()=>{
